@@ -11,10 +11,10 @@ pool:
 
 steps:
 - script: pwd
-  displayName: 'Run a one-line script'
+  displayName: 'Print pwd'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     cd k8s
-    terraform init
+    terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
   displayName: 'Initialize Terraform'
