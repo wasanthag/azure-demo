@@ -9,12 +9,47 @@ trigger:
 pool:
   name: 'default'
 
-steps:
-- script: pwd
-  displayName: 'Print pwd'
+stages:
+  - stage: Init
+    jobs:
+    - job: Init
+      continueOnError: false
+      steps:
+      - script: |
+        echo Initializing Terraform with TFE remote backend
+        cd k8s
+        terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
+        displayName: 'Initialize Terraform'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    cd k8s
-    terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
-  displayName: 'Initialize Terraform'
+  - stage: Validate
+    jobs:
+    - job: Validate
+      continueOnError: false
+      steps:
+      - script: |
+        echo Validate Terraform Code with TFE remote backend
+        cd k8s
+        terraform validate -no-color
+        displayName: 'Validate Terraform Code'
+
+  - stage: Plan
+    jobs:
+    - job: Plan
+      continueOnError: false
+      steps:
+      - script: |
+        echo Run Terraform plan with TFE remote backend
+        cd k8s
+        terraform plan -no-color
+        displayName: 'Run Terraform Plan'
+
+  - stage: Apply
+    jobs:
+    - job: Apply
+      continueOnError: false
+      steps:
+    - script: |
+        echo Applying Terraform with TFE remote backend
+        cd k8s
+        terraform plan -no-color
+        displayName: 'Initialize Terraform'
