@@ -1,5 +1,5 @@
 tags = {
-  author = "Thorsten Hans"
+  author = "Wasantha Gamage"
 }
 
 appservice_plan_tier = "Standard"

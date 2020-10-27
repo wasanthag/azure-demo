@@ -1,6 +1,3 @@
-# Terraform - The definitive guide for Azure enthusiasts
+# Azure Terraform Demo
 
-This sample is part of my article "Terraform - The definitive guide for Azure enthusiasts"
-
-Read the article [on my blog](https://thns.io/terraform-guide)
-
+A repository containing Terraform code to create Various Azure resources.
