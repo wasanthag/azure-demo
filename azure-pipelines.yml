@@ -44,19 +44,10 @@ stages:
           cd k8s
           terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
           terraform apply -no-color
+          terraform output kube_config > azurek8s
       displayName: 'Apply Terraform'
   
-  - stage: Get_Kubeconfig
-    jobs:
-    - job: kubeconfig
-      continueOnError: false
-      steps:
-      - script: |
-          echo Create kubeconfig for k8s
-          cd k8s
-          terraform output kube_config > azurek8s
-        displayName: 'Create kubeconfig'
-      
+        
   - stage: Validate_K8s_cluster
     jobs:
     - job: k8s_get_nodes
@@ -65,6 +56,7 @@ stages:
       - script: |
           echo Get k8s cluster nodes
           cd k8s
+          ls
           export KUBECONFIG=./azurek8s
           kubectl get nodes
         displayName: 'Validate k8s cluster'
