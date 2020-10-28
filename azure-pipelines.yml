@@ -50,7 +50,7 @@ stages:
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: $(System.DefaultWorkingDirectory)/k8s/azurek8s
-          artifactName: WebApp    
+          artifactName: kubeconfig    
    
         
   - stage: Validate_K8s_cluster
@@ -58,9 +58,12 @@ stages:
     - job: k8s_get_nodes
       continueOnError: false
       steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          artifact: kubeconfig
       - script: |
           echo Get k8s cluster nodes
-          cd k8s
+          pwd
           ls
           export KUBECONFIG=./azurek8s
           kubectl get nodes
