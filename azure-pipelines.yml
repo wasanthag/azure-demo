@@ -10,18 +10,7 @@ pool:
   name: 'default'
 
 stages:
-  - stage: Init
-    jobs:
-    - job: Init
-      continueOnError: false
-      steps:
-      - script: |
-          echo Initializing Terraform with TFE remote backend
-          cd k8s
-          terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
-        displayName: 'Initialize Terraform'
-
-  - stage: Validate
+  - stage: Validate TF Code
     jobs:
     - job: Validate
       continueOnError: false
@@ -33,7 +22,7 @@ stages:
           terraform validate -no-color
         displayName: 'Validate Terraform Code'
 
-  - stage: Plan
+  - stage: Review Terrafrm Plan
     jobs:
     - job: Plan
       continueOnError: false
@@ -45,7 +34,7 @@ stages:
           terraform plan -no-color
         displayName: 'Run Terraform Plan'
 
-  - stage: Apply
+  - stage: Apply Terraform Code
     jobs:
     - job: Apply
       continueOnError: false
@@ -56,3 +45,26 @@ stages:
           terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
           terraform apply -no-color
       displayName: 'Apply Terraform'
+  
+  - stage: Get Kubeconfig
+    jobs:
+    - job: kubeconfig
+      continueOnError: false
+      steps:
+      - script: |
+          echo Create kubeconfig for k8s
+          cd k8s
+          terraform output kube_config > azurek8s
+        displayName: 'Create kubeconfig'
+      
+  - stage: Validate K8s cluster
+    jobs:
+    - job: k8s_get_nodes
+      continueOnError: false
+      steps:
+      - script: |
+          echo Get k8s cluster nodes
+          cd k8s
+          export KUBECONFIG=./azurek8s
+          kubectl get nodes
+        displayName: 'Validate k8s cluster'
