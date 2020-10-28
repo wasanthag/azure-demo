@@ -63,8 +63,6 @@ stages:
           artifact: kubeconfig
       - script: |
           echo Get k8s cluster nodes
-          pwd
-          ls
-          export KUBECONFIG=./azurek8s
-          kubectl get nodes
+          export KUBECONFIG=./../azurek8s
+          kubectl cluster-info
         displayName: 'Validate k8s cluster'
