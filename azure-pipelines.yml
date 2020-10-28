@@ -49,7 +49,7 @@ stages:
         displayName: 'Apply Terraform'
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: $(System.DefaultWorkingDirectory)/azurek8s
+          targetPath: $(System.DefaultWorkingDirectory)/k8s/azurek8s
           artifactName: WebApp    
    
         
