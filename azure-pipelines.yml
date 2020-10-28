@@ -10,7 +10,7 @@ pool:
   name: 'default'
 
 stages:
-  - stage: Validate TF Code
+  - stage: Validate_TF_Code
     jobs:
     - job: Validate
       continueOnError: false
@@ -22,7 +22,7 @@ stages:
           terraform validate -no-color
         displayName: 'Validate Terraform Code'
 
-  - stage: Review Terrafrm Plan
+  - stage: Review_Terrafrm_Plan
     jobs:
     - job: Plan
       continueOnError: false
@@ -34,7 +34,7 @@ stages:
           terraform plan -no-color
         displayName: 'Run Terraform Plan'
 
-  - stage: Apply Terraform Code
+  - stage: Apply_Terraform_Code
     jobs:
     - job: Apply
       continueOnError: false
@@ -46,7 +46,7 @@ stages:
           terraform apply -no-color
       displayName: 'Apply Terraform'
   
-  - stage: Get Kubeconfig
+  - stage: Get_Kubeconfig
     jobs:
     - job: kubeconfig
       continueOnError: false
@@ -57,7 +57,7 @@ stages:
           terraform output kube_config > azurek8s
         displayName: 'Create kubeconfig'
       
-  - stage: Validate K8s cluster
+  - stage: Validate_K8s_cluster
     jobs:
     - job: k8s_get_nodes
       continueOnError: false
