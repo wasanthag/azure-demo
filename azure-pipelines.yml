@@ -42,6 +42,7 @@ stages:
       - script: |
           echo Applying Terraform with TFE remote backend
           cd k8s
+          rm -f azurek8s
           terraform init -no-color -backend-config="token=xJBnw4QmfAmbJw.atlasv1.4Alv2dxmVCV3i1A2AZgJNRDO6ep19Wq63OyRRLFpk5v7f72QzGi3JJu6Mg1DuJNh76c"
           terraform apply -no-color
           terraform output kube_config > azurek8s
